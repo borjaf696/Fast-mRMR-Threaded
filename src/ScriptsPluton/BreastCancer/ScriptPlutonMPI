@@ -1,0 +1,37 @@
+#!/bin/bash
+#$ -l s_rt=24:00:00,mem_free=1G
+module load gcc/5.2.1 boost/gcc/openmpi-1.6.4/1.55.0 openmpi/gcc/eth/1.6.4
+cd /home/borja.freire/TFM/Código/fast-mRMR-master/cpu-OpenMp/src/ScriptsPluton/BreastCancer/
+cd ..
+cd ..
+cd ParallelMPI/
+make clean
+make
+cd ../ScriptsCesga/BreastCancer/
+for i in `seq 1 3`;
+do
+	#$ -pe mpi_1p 16
+	mpirun -np 1 -npernode 1 -x OMP_NUM_THREADS=16 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray50FeaturesTotal
+	mpirun -np 1 -npernode 1 -x OMP_NUM_THREADS=16 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray100FeaturesTotal
+	mpirun -np 1 -npernode 1 -x OMP_NUM_THREADS=16 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray200FeaturesTotal
+
+	#$ -pe mpi_2p 16
+	mpirun -np 2 -npernode2 -x OMP_NUM_THREADS=8 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray50FeaturesTotal
+	mpirun -np 2 -npernode2 -x OMP_NUM_THREADS=8 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray100FeaturesTotal
+	mpirun -np 2 -npernode2 -x OMP_NUM_THREADS=8 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray200FeaturesTotal
+
+	#$ -pe mpi_4p 16
+	mpirun -np 4 -npernode 4 -x OMP_NUM_THREADS=4 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray50FeaturesTotal
+	mpirun -np 4 -npernode 4 -x OMP_NUM_THREADS=4 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray100FeaturesTotal
+	mpirun -np 4 -npernode 4 -x OMP_NUM_THREADS=4 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray200FeaturesTotal
+
+	#$ -pe mpi_8p 16
+	mpirun -np 8 -npernode 8 -x OMP_NUM_THREADS=2 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray50FeaturesTotal
+	mpirun -np 8 -npernode 8 -x OMP_NUM_THREADS=2 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray100FeaturesTotal
+	mpirun -np 8 -npernode 8 -x OMP_NUM_THREADS=2 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray200FeaturesTotal
+
+	#$ -pe mpi_16p 16
+	mpirun -np 16 -npernode 16 -x OMP_NUM_THREADS=1 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray50FeaturesTotal
+	mpirun -np 16 -npernode 16 -x OMP_NUM_THREADS=1 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray100FeaturesTotal
+	mpirun -np 16 -npernode 16 -x OMP_NUM_THREADS=1 -p ./../../ParallelMPI/fast-mrmr -f /home2/borja.freire/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Pluton/BreastCancer/MPI/breastMicroArray200FeaturesTotal
+done

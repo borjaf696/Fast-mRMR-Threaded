@@ -1,0 +1,39 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -n 24
+#SBATCH -t 24:00:00
+#SBATCH -p thinnodes
+cd ..
+cd ..
+module load gcc boost
+cd Parallel/
+make clean
+make
+cd ../ScriptsCesga/BreastCancer/
+for i in `seq 1 3`;
+do
+	export OMP_NUM_THREADS=1
+	./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray50FeaturesTotalJorgeThinnodes
+	./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray100FeaturesTotalJorgeThinnodes
+	./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray200FeaturesTotalJorgeThinnodes
+	export OMP_NUM_THREADS=2
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray50FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray100FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray200FeaturesTotalJorgeThinnodes
+	export OMP_NUM_THREADS=4
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray50FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray100FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray200FeaturesTotalJorgeThinnodes
+	export OMP_NUM_THREADS=6
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray50FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray100FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray200FeaturesTotalJorgeThinnodes
+	export OMP_NUM_THREADS=12
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray50FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray100FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray200FeaturesTotalJorgeThinnodes
+	export OMP_NUM_THREADS=24
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray50FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray100FeaturesTotalJorgeThinnodes
+        ./../../Parallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/OpenMp/breastMicroArray200FeaturesTotalJorgeThinnodes
+done

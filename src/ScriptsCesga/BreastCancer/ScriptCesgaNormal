@@ -1,0 +1,19 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -n 1
+#SBATCH -t 24:00:00
+module load gcc boost
+cd ..
+cd ..
+cd NoParallel/
+make clean
+make
+cd ..
+cd ScriptsCesga/BreastCancer/
+for i in `seq 1 3`;
+do
+	./../../NoParallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 50 >> ../../../Output-Cesga/BreastCancer/Normal/breastMicroArray50FeaturesTotalCesga
+        ./../../NoParallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 100 >> ../../../Output-Cesga/BreastCancer/Normal/breastMicroArray100FeaturesTotalCesga
+	./../../NoParallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 200 >> ../../../Output-Cesga/BreastCancer/Normal/breastMicroArray200FeaturesTotalCesga
+	./../../NoParallel/fast-mrmr -f $LUSTRE/Datasets/Mrmr/breast_preprocessed.mrmr -a 1000 >> ../../../Output-Cesga/BreastCancer/Normal/breastMicroArray1000FeaturesTotalCesga
+done

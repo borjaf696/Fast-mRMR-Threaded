@@ -1,0 +1,33 @@
+#!/bin/bash
+#SBATCH -N 1
+#SBATCH -n 24
+#SBATCH -t 24:00:00
+cd ..
+cd ..
+module load gcc boost openmpi
+cd ParallelMPI/
+make clean
+make
+cd ../ScriptsCesga/webspam/
+for i in `seq 1 3`;
+do
+	mpirun -np 1  ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 50 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray50FeaturesMain3TotalCesga
+	mpirun -np 1  ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 100 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray100FeaturesMain3TotalCesga
+	mpirun -np 1  ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 200 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray200FeaturesMain3TotalCesga
+
+	mpirun -np 2 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 50 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray50FeaturesMain3TotalCesga
+	mpirun -np 2 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 100 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray100FeaturesMain3TotalCesga
+	mpirun -np 2 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 200 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray200FeaturesMain3TotalCesga
+
+	mpirun -np 4 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 50 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray50FeaturesMain3TotalCesga
+	mpirun -np 4 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 100 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray100FeaturesMain3TotalCesga
+	mpirun -np 4 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 200 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray200FeaturesMain3TotalCesga
+
+	mpirun -np 12 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 50 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray50FeaturesMain3TotalCesga
+	mpirun -np 12 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 100 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray100FeaturesMain3TotalCesga
+	mpirun -np 12 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 200 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray200FeaturesMain3TotalCesga
+
+	mpirun -np 24 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 50 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray50FeaturesMain3TotalCesga
+	mpirun -np 24 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 100 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray100FeaturesMain3TotalCesga
+	mpirun -np 24 --report-bindings --map-by socket ./../../ParallelMPI/fast-mrmr -f $LUSTRE/Datasets/Mrmr/webspam.mrmr -a 200 >> ../../../Output-Cesga/webspam/MPI/webspamMicroArray200FeaturesMain3TotalCesga
+done

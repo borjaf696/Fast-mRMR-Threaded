@@ -1,0 +1,22 @@
+To execute:
+on file -> cd src/Parallel/
+	   make
+	   export OMP_NUM_THREADS=$NumberOfThreadsDesired$
+	   ./fast-mrmr -a NumberFeaturesSelected -f FileInput -c (NumberOfClassFeature+1)
+
+FileInput -> the code only understands the .mrmr format to translate to this format:
+	   cd data-reader
+           make
+           ./mrmr-reader input_file output_file
+	   -> input_file -> csv format with rows as datasamples and columns as features, and discretized (mrmr works properlly with a discretized entry)
+
+Output -> The execution offers 3 outputs.
+	-> SelectedFeatures -> in order
+	-> Relevance Time -> Time to compute relevance for all features
+	-> Redundacy Time -> Time to compute all redundancy step
+	-> Total Time -> Time to execute all code -> read, inicialization and destruction included.
+
+CSV Directory -> Contains the small datasets in csv format, already discretized with k = 3
+Discretizer Directory -> Python code to discretize a csv file with k states -> EqualWidth mode.
+	-> Execution example: python /Discretrizer/equal.py -f fileInput -o outputFile -k states -nf NumberOfFeaturesDataset -c (NumberOfClassFeature+1)
+
